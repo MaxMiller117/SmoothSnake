@@ -13,6 +13,7 @@ canvas {
 <script>
 
 var myGamePiece;
+var speed = 2;
 
 function startGame() {
     myGameArea.start();
@@ -62,10 +63,10 @@ function updateGameArea() {
     myGameArea.clear();
     //myGamePiece.speedX = 0;
     //myGamePiece.speedY = 0;    
-    if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX = -1; myGamePiece.speedY = 0;}
-    if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX = 1; myGamePiece.speedY = 0;}
-    if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedY = -1; myGamePiece.speedX = 0;}
-    if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY = 1; myGamePiece.speedX = 0;}
+    if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX = -1*speed; myGamePiece.speedY = 0;}
+    if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX = speed; myGamePiece.speedY = 0;}
+    if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedX = 0; myGamePiece.speedY = -1*speed;}
+    if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedX = 0; myGamePiece.speedY = speed;}
     myGamePiece.newPos();    
     myGamePiece.update();
 }
