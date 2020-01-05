@@ -45,7 +45,6 @@ var myGameArea = {
     }
 }
 
-
 function component(width, height, color, x, y) {
     this.gamearea = myGameArea;
     this.width = width;
@@ -78,6 +77,12 @@ function component(width, height, color, x, y) {
         (myright < otherleft) ||
         (myleft > otherright)) {
             crash = false;
+        }
+        if (this.x + this.width >= 480 || this.y + this.width >= 270) {
+            crash = true;
+        }
+        if (this.y <= 0 || this.x <= 0) {
+            crash = true;
         }
         return crash;
     }
