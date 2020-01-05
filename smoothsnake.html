@@ -14,6 +14,7 @@ canvas {
 
 var myGamePiece;
 var myObstacle;
+var speed = 2;
 
 function startGame() {
     myGameArea.start();
@@ -84,16 +85,17 @@ function component(width, height, color, x, y) {
 
 function updateGameArea() {
     if (myGamePiece.crashWith(myObstacle)) {
+		myGameArea.stop();
         myGameArea.start();
     } else {
         myGameArea.clear();
         myObstacle.update();
-        myGamePiece.speedX = 0;
-        myGamePiece.speedY = 0;    
-        if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX = -1; }
-        if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX = 1; }
-        if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedY = -1; }
-        if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY = 1; }
+		
+        if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX = -1*speed; myGamePiece.speedY = 0;}
+        if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX = 1*speed; myGamePiece.speedY = 0;}
+        if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedY = -1*speed; myGamePiece.speedX = 0;}
+        if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY = 1*speed; myGamePiece.speedX = 0;}
+		
         myGamePiece.newPos();    
         myGamePiece.update();
     }
