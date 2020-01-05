@@ -12,8 +12,10 @@ canvas {
 <body onload="startGame()">
 <script>
 
+var mySnake = [];
 var myGamePiece;
 var myObstacle;
+var myFood;
 var speed = 2;
 
 function startGame() {
@@ -36,12 +38,16 @@ var myGameArea = {
         })
         myGamePiece = new component(30, 30, "red", 10, 120);
         myObstacle = new component(100, 15, "green", 100, 45);
+        myFood = new component(10, 10, "pink", 120, 115);
     }, 
     clear : function(){
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     },
     stop : function() {
         clearInterval(this.interval);
+    },
+    grow : function() {
+        myTail = new component(30, 30, "red", myGamePiece.x - 30, myGamePiece.y - 30);
     }
 }
 
@@ -85,16 +91,19 @@ function component(width, height, color, x, y) {
             crash = true;
         }
         return crash;
-    }
+    }        
 }
 
 function updateGameArea() {
     if (myGamePiece.crashWith(myObstacle)) {
 		myGameArea.stop();
         myGameArea.start();
+    } else if (myGamePiece.crashWith(myFood)) {
+        myGameArea.grow();
     } else {
         myGameArea.clear();
         myObstacle.update();
+        myFood.update();
 		
         if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX = -1*speed; myGamePiece.speedY = 0;}
         if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX = 1*speed; myGamePiece.speedY = 0;}
