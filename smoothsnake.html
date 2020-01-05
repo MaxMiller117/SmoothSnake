@@ -10,11 +10,14 @@ canvas {
 </style>
 </head>
 <body onload="startGame()">
+<h2 id="score">Score: </h2>
+<h1>Smooth Snake</h1>
 <script>
 
 var myGamePiece;
 var myObstacle;
 var speed = 2;
+var score = 0;
 
 function startGame() {
     myGameArea.start();
@@ -36,6 +39,7 @@ var myGameArea = {
         })
         myGamePiece = new component(30, 30, "red", 10, 120);
         myObstacle = new component(100, 15, "green", 100, 45);
+		score = 0;
     }, 
     clear : function(){
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -89,6 +93,8 @@ function component(width, height, color, x, y) {
 }
 
 function updateGameArea() {
+	updateScore(score);
+
     if (myGamePiece.crashWith(myObstacle)) {
 		myGameArea.stop();
         myGameArea.start();
@@ -105,7 +111,11 @@ function updateGameArea() {
         myGamePiece.update();
     }
 }
+
+function updateScore(score) {
+	document.getElementById("score").innerHTML = "Score: "+score;
+}
 </script>
-<p>Make sure this window has focus, then you can use the arrow keys on you keyboard to move the red square.</p>
+<p>Make sure this window has focus, then you can use the arrow keys on your keyboard to move the red square.</p>
 </body>
 </html>
