@@ -14,7 +14,9 @@ canvas {
 
 var myGamePiece;
 var myObstacle;
+var myFood;
 var speed = 2;
+var initEat = false;
 
 function startGame() {
     myGameArea.start();
@@ -36,6 +38,7 @@ var myGameArea = {
         })
         myGamePiece = new component(30, 30, "red", 10, 120);
         myObstacle = new component(100, 15, "green", 100, 45);
+        myFood = new component(15, 15, "purple", 100, 100);
     }, 
     clear : function(){
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -52,7 +55,13 @@ function component(width, height, color, x, y) {
     this.speedX = 0;
     this.speedY = 0;    
     this.x = x;
-    this.y = y;    
+    this.y = y;  
+    this.clear = function() {
+        this.x = 0;
+        this.y = 0;
+        this.width = 0;
+        this.height = 0;
+    } 
     this.update = function() {
         ctx = myGameArea.context;
         ctx.fillStyle = color;
@@ -92,9 +101,20 @@ function updateGameArea() {
     if (myGamePiece.crashWith(myObstacle)) {
 		myGameArea.stop();
         myGameArea.start();
+    }
+    if (myGamePiece.crashWith(myFood)) {
+        if (!initEat) {
+            myGamePiece.width = myGamePiece.width*2;
+            initEat = true;
+            myFood.clear();
+            myFood.update();
+            myGamePiece.update();
+        }
     } else {
         myGameArea.clear();
         myObstacle.update();
+        myFood.update();
+       
 		
         if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX = -1*speed; myGamePiece.speedY = 0;}
         if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX = 1*speed; myGamePiece.speedY = 0;}
