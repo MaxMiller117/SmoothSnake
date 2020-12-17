@@ -38,6 +38,7 @@ var myGameArea = {
             myGameArea.key = false;
         })
         myGamePiece = new component(30, 30, "red", 10, 120);
+        gamePieceList = [];
         gamePieceList.push(myGamePiece);
         myObstacle = new component(100, 15, "green", 100, 45);
         myFood = new component(15, 15, "purple", 100, 100);
@@ -106,7 +107,7 @@ function updateGameArea() {
     }
     if (myGamePiece.crashWith(myFood)) {
         if (!initEat) {
-            gamePieceList.push(new component(30, 30, "red", myGamePiece.x - 30, myGamePiece.y - 30));
+            gamePieceList.push(new component(30, 30, "red", gamePieceList[gamePieceList.length-1].x - 30, gamePieceList[gamePieceList.length-1].y - 30));
             myFood.clear();
             myFood.update();
             //myGamePiece.update();
