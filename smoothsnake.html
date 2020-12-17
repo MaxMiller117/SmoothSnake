@@ -17,6 +17,7 @@ var myObstacle;
 var myFood;
 var speed = 2;
 var initEat = false;
+var gamePieceList = [];
 
 function startGame() {
     myGameArea.start();
@@ -37,6 +38,7 @@ var myGameArea = {
             myGameArea.key = false;
         })
         myGamePiece = new component(30, 30, "red", 10, 120);
+        gamePieceList.push(myGamePiece);
         myObstacle = new component(100, 15, "green", 100, 45);
         myFood = new component(15, 15, "purple", 100, 100);
     }, 
@@ -104,25 +106,31 @@ function updateGameArea() {
     }
     if (myGamePiece.crashWith(myFood)) {
         if (!initEat) {
-            myGamePiece.width = myGamePiece.width*2;
-            initEat = true;
+            gamePieceList.push(new component(30, 30, "red", myGamePiece.x - 30, myGamePiece.y - 30));
             myFood.clear();
             myFood.update();
-            myGamePiece.update();
+            //myGamePiece.update();
+            for (var i = 0; i < gamePieceList.length; i++) {
+                gamePieceList[i].newPos();
+                gamePieceList[i].update();
+            }
         }
     } else {
         myGameArea.clear();
         myObstacle.update();
         myFood.update();
-       
 		
         if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX = -1*speed; myGamePiece.speedY = 0;}
         if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX = 1*speed; myGamePiece.speedY = 0;}
         if (myGameArea.key && myGameArea.key == 38) {myGamePiece.speedY = -1*speed; myGamePiece.speedX = 0;}
         if (myGameArea.key && myGameArea.key == 40) {myGamePiece.speedY = 1*speed; myGamePiece.speedX = 0;}
 		
-        myGamePiece.newPos();    
+        myGamePiece.newPos(); 
         myGamePiece.update();
+        for (var i = 0; i < gamePieceList.length; i++) {
+            gamePieceList[i].newPos();
+            gamePieceList[i].update();
+        }
     }
 }
 </script>
